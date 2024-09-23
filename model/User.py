@@ -10,7 +10,7 @@ class User(Base):
     email = Column(String(200), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
 
-    cars = relationship("Car", back_populates="cars", cascade="all, delete-orphan")
+    cars = relationship("Car", back_populates="user", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<User(id={self.id} username={self.username}, email={self.email} password={self.password})>"
