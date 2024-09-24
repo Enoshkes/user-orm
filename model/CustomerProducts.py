@@ -1,8 +1,15 @@
-from sqlalchemy import Table, Column, Integer, ForeignKey
+from sqlalchemy import Column, Integer, ForeignKey, PrimaryKeyConstraint
 
 from config.base import Base
 
-customer_products = Table('customer_products', Base.metadata,
-    Column('product_id', Integer, ForeignKey('products.id')),
-    Column('customer_id', Integer, ForeignKey('customers.id')),
-)
+class CustomerProducts(Base):
+    __tablename__ = "customer_products"
+    customer_id = Column(Integer, ForeignKey("customers.id"), nullable=False)
+    product_id = Column(Integer, ForeignKey("products.id"), nullable=False)
+
+    __table_args__ = (
+        PrimaryKeyConstraint('customer_id', 'product_id'),
+    )
+
+    def __repr__(self):
+        return f"<CustomerProducts(customer_id={self.customer_id}, product_id={self.product_id})>"
